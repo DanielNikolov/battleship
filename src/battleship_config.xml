@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    
+    <!-- Data objects -->
+    <bean id="board" name="board" class="org.battleshipgame.data.Board" scope="singleton">
+        <constructor-arg name="height" value="10" />
+        <constructor-arg name="width" value="10" />
+    </bean>
+    
+    <!-- DAO objects -->
+    <bean id="shipDao" name="shipDao" class="org.battleshipgame.daо.ShipDao" />
+    <bean id="boardDao" name="boardDao" class="org.battleshipgame.daо.BoardDao">
+        <property name="board" ref="board" /> 
+    </bean>
+    
+    <!-- Service Objects -->
+    <bean id="boardService" name="boardService" class="org.battleshipgame.service.BoardService">
+        <property name="boardDao" ref="boardDao" />
+    </bean>
+    
+    <!-- Application objects -->
+    <bean id="battleshipApp" name="battleshipApp" class="org.battleshipgame.app.BattleshipApp">
+        <property name="boardService" ref="boardService" />
+    </bean>
+
+</beans>
